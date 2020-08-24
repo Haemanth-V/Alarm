@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <Button
+        android:id="@+id/buttonTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_centerInParent="true"
+        android:onClick="timer"
+        android:text="Timer"
+        android:textColor="#000" />
+
+    <Button
+        android:id="@+id/buttonAlarm"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_above="@id/buttonTimer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="72dp"
+        android:onClick="alarm"
+        android:text="Alarm"
+        android:textColor="#000" />
+
+    <Button
+        android:id="@+id/buttonStopWatch"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_below="@id/buttonTimer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="72dp"
+        android:onClick="stopWatch"
+        android:text="Stop\nWatch"
+        android:textColor="#000" />
+
+    <TextView
+        android:id="@+id/textViewClock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CLOCK"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:textStyle="bold"
+        android:textSize="32sp" />
+
+</RelativeLayout>
