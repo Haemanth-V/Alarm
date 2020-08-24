@@ -87,12 +87,14 @@ public class Alarm extends AppCompatActivity implements TimePickerDialog.OnTimeS
     }
 
     public void deleteAlarm(View view){
-        if(timeSet)
-            stopService(serviceIntent);
         String str =  "No Alarm Set";
         textView.setText(str);
-        str = "Alarm deleted!";
-        Toast.makeText(this,str,Toast.LENGTH_LONG).show();
+        if(timeSet) {
+            stopService(serviceIntent);
+            str = "Alarm deleted!";
+            Toast.makeText(this, str, Toast.LENGTH_LONG).show();
+            timeSet = false;
+        }
 
     }
 
