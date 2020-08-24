@@ -40,9 +40,9 @@ public class Alarm extends AppCompatActivity implements TimePickerDialog.OnTimeS
         timeSet = false;
         ringtoneChosen = 0;
         ringtoneActivity = new RingtoneActivity(this);
-        buttonSetAlarm = (Button) findViewById(R.id.buttonSetAlarm);
-        textView = (TextView) findViewById(R.id.textViewDisplayTime);
-        buttonDeleteAlarm = (Button) findViewById(R.id.buttonDeleteAlarm);
+        buttonSetAlarm = findViewById(R.id.buttonSetAlarm);
+        textView = findViewById(R.id.textViewDisplayTime);
+        buttonDeleteAlarm =  findViewById(R.id.buttonDeleteAlarm);
         alarmService = new AlarmService();
         serviceIntent = new Intent(this, alarmService.getClass());
 
@@ -87,14 +87,13 @@ public class Alarm extends AppCompatActivity implements TimePickerDialog.OnTimeS
     }
 
     public void deleteAlarm(View view){
-        /*AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, AlertReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1,intent, 0);
-        alarmManager.cancel(pendingIntent);
-        String msg = "Alarm deleted!";
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
-        msg = "No Alarm Set";
-        textView.setText(msg);*/
+        if(timeSet)
+            stopService(serviceIntent);
+        String str =  "No Alarm Set";
+        textView.setText(str);
+        str = "Alarm deleted!";
+        Toast.makeText(this,str,Toast.LENGTH_LONG).show();
+
     }
 
     public void chooseRingtone(View view){
@@ -122,14 +121,16 @@ public class Alarm extends AppCompatActivity implements TimePickerDialog.OnTimeS
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stopService(serviceIntent); //Responsible for invoking modified onDestroy()
         Log.d(TAG, "Alarm onDestroy - Stop service");
-        Intent broadcastIntent = new Intent();
-        broadcastIntent.setAction("restartservice");
-        broadcastIntent.setClass(this,Restarter.class);
-        broadcastIntent.putExtra("RINGTONE",ringtoneChosen);
-        broadcastIntent.putExtra("TIME",calendar.getTimeInMillis());
-        this.sendBroadcast(broadcastIntent);
+        if(timeSet) {
+            stopService(serviceIntent); //Responsible for invoking modified onDestroy()
+            Intent broadcastIntent = new Intent();
+            broadcastIntent.setAction("restartservice");
+            broadcastIntent.setClass(this, Restarter.class);
+            broadcastIntent.putExtra("RINGTONE", ringtoneChosen);
+            broadcastIntent.putExtra("TIME", calendar.getTimeInMillis());
+            this.sendBroadcast(broadcastIntent);
+        }
 
     }
 }
